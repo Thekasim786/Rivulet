@@ -1,0 +1,18 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: sans-serif;
+}
+
+/* Example component */
+.card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem;
+}
