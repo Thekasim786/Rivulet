@@ -11,6 +11,7 @@ import Navbar from './Navbar';
 import { useLocation } from 'react-router-dom';
 
 const HomePage = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [videos, setVideos] = useState([]);
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await fetch('http://localhost:5500/api/videos');
+        const res = await fetch(`${backendUrl}/api/videos`);
         if (!res.ok) throw new Error('Failed to fetch videos');
         const data = await res.json();
         setVideos(data);

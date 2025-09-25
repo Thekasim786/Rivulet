@@ -4,9 +4,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+// const AuthRouter = require('./Routes/AuthRouter');
 
+import AuthRouter from "./Routes/AuthRouter.js";
 import connectDB from "./models/db.js";
-import videoRoutes from "./routes/videoRoutes.js";
+import videoRoutes from "./Routes/videoRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -17,6 +19,7 @@ const PORT = process.env.PORT || 5000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use('/auth', AuthRouter);
 
 // For static video serving (HLS playlists, segments, thumbnails)
 const __filename = fileURLToPath(import.meta.url);

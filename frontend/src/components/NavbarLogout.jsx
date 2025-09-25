@@ -144,7 +144,7 @@ export default function NavbarLogout() {
             component="div"
             sx={{ color: themeColors.text, display: { xs: 'none', sm: 'block' } }}
           >
-            Bitflix
+            Rivulet
           </Typography>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: 4 }}>

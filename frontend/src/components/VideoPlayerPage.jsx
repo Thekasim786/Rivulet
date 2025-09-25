@@ -16,7 +16,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import VideoJS from "./VideoJS";
 
+
 const VideoPlayerPage = () => {
+  const apiUrl = import.meta.env.VITE_VIDEO_BASE_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  
   const { id } = useParams();
   const navigate = useNavigate();
   const playerRef = useRef(null);
@@ -27,10 +31,11 @@ const VideoPlayerPage = () => {
   const [streamError, setStreamError] = useState(null);
   const [playerReady, setPlayerReady] = useState(false);
 
+  
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const res = await axios.get(`http://localhost:5500/api/videos/${id}`);
+        const res = await axios.get(`${backendUrl}/api/videos/${id}`);
         setVideo(res.data);
       } catch (err) {
         console.error("Failed to fetch video:", err);
@@ -55,10 +60,11 @@ const VideoPlayerPage = () => {
       fluid: true,
       preload: 'metadata',
       playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
-      poster: video.thumbnail ? `http://localhost:5500/thumbnails/${video.thumbnail}` : null,
+      poster: video.thumbnail ? `${apiUrl}/thumbnails/${video.thumbnail}` : null,
       sources: [
         {
-          src: `http://localhost:5500/videos/${video.filename}/master.m3u8`,
+          //src: `http://localhost:5500/videos/${video.filename}/master.m3u8`,
+          src: `${apiUrl}/video/${video.filename}/master.m3u8`,
           type: "application/x-mpegURL"
         }
       ],

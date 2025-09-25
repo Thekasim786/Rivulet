@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils';
 
 function Signup() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [signupInfo, setSignupInfo] = useState({
     name: '',
     email: '',
@@ -24,7 +25,7 @@ function Signup() {
       return handleError('Name, email, and password are required');
     }
     try {
-      const response = await fetch(`http://localhost:5500/auth/signup`, {
+      const response = await fetch(`${backendUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

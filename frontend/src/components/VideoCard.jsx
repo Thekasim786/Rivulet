@@ -6,9 +6,11 @@ const VideoCard = ({ video }) => {
   const navigate = useNavigate();
 
 const getThumbnail = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const apiUrl = import.meta.env.VITE_VIDEO_BASE_URL;
   console.log(video.thumbnail);
   return video.thumbnail
-    ? `http://localhost:5500/thumbnails/${video.thumbnail}`
+    ? `${apiUrl}/thumbnails/${video.thumbnail}`
     : '/api/placeholder/480/270'; // fallback
 };
 

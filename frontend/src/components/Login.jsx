@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils';
 
 function Login() {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [loginInfo, setLoginInfo] = useState({
         email: '',
         password: ''
@@ -22,21 +23,34 @@ function Login() {
         if (!email || !password) {
             return handleError('Email and password are required');
         }
+
         try {
-            const response = await fetch(`http://localhost:5500/auth/login`, {
+            const response = await fetch(`${backendUrl}/auth/login`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(loginInfo)
             });
+
             const result = await response.json();
-            const { success, message, jwtToken, name, error } = result;
+            const { success, message, jwtToken, name, isAdmin, error } = result;
+
             if (success) {
                 handleSuccess(message);
+
+                // Store token + user info
                 localStorage.setItem('token', jwtToken);
                 localStorage.setItem('loggedInUser', name);
-                setTimeout(() => navigate('/homepage'), 1000);
+                localStorage.setItem('isAdmin', isAdmin); // new field
+
+                // Redirect based on isAdmin
+                setTimeout(() => {
+                    if (isAdmin) {
+                        navigate('/admin');
+                    } else {
+                        navigate('/homepage');
+                    }
+                }, 1000);
+
             } else if (error) {
                 handleError(error?.details[0]?.message);
             } else {
@@ -81,18 +95,19 @@ function Login() {
                             placeholder='Enter your email...'
                             value={loginInfo.email}
                             style={{
-                                width: 'calc(100% - 20px)',  // Ensure equal padding on both sides
+                                width: 'calc(100% - 20px)',
                                 padding: '10px',
                                 border: '1px solid #90c67c',
                                 borderRadius: '4px',
                                 outline: 'none',
                                 fontSize: '14px',
                                 backgroundColor: '#fff',
-                                marginLeft: '10px', // Ensures left margin
-                                marginRight: '10px', // Ensures right margin
+                                marginLeft: '10px',
+                                marginRight: '10px',
                             }}
                         />
                     </div>
+
                     <div style={{ marginBottom: '20px' }}>
                         <label htmlFor='password' style={{ display: 'block', fontSize: '14px', marginBottom: '5px' }}>Password</label>
                         <input
@@ -102,18 +117,19 @@ function Login() {
                             placeholder='Enter your password...'
                             value={loginInfo.password}
                             style={{
-                                width: 'calc(100% - 20px)',  // Ensures equal padding on both sides
+                                width: 'calc(100% - 20px)',
                                 padding: '10px',
                                 border: '1px solid #90c67c',
                                 borderRadius: '4px',
                                 outline: 'none',
                                 fontSize: '14px',
                                 backgroundColor: '#fff',
-                                marginLeft: '10px', // Ensures left margin
-                                marginRight: '10px', // Ensures right margin
+                                marginLeft: '10px',
+                                marginRight: '10px',
                             }}
                         />
                     </div>
+
                     <button type='submit' style={{
                         width: '100%',
                         padding: '12px',
@@ -131,6 +147,7 @@ function Login() {
                     >
                         Login
                     </button>
+
                     <div style={{ marginTop: '15px', fontSize: '13px', textAlign: 'center' }}>
                         Don't have an account?{' '}
                         <Link to="/signup" style={{ color: '#183B4E', textDecoration: 'underline' }}>

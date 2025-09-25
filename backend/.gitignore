@@ -1,0 +1,13 @@
+# Ignore environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# Node.js dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/

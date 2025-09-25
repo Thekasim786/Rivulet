@@ -14,6 +14,10 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false, // by default users are not admins
     }
 });
 

@@ -11,9 +11,12 @@ import VideoPlayerPage from './components/VideoPlayerPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import RefrshHandler from './RefrshHandler';
+
 import './app.css'
 
 import Navbar from './components/Navbar';
+import AdminPanelLayout from './components/Admin';
+import UploadVideo from './components/UploadVideo';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,6 +38,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         {/* <Route path="/homepage" element={<HomePage />} /> */}
         <Route path="/video/:id" element={<VideoPlayerPage />} />
+        <Route path="/admin" element={<AdminPanelLayout />} />
+        <Route path="/admin/upload" element={<UploadVideo />} />
         <Route path='/homepage' element={<PrivateRoute element={<HomePage />} />} />
       </Routes>
     </BrowserRouter>
